@@ -71,11 +71,10 @@ def configure_ssh(user_home):
    return pub_key
 
 @print_func
-def configure_deploy_key(pub_key):
+def configure_ssh_key(pub_key):
    print("You need to add the contents of your public key to GitHub.")
-   print("It is recommended that you add this as a deploy key to the repository.")
    print("For instructions on how to do this, please visit:")
-   print("\thttps://docs.flsvc.net/docs/add-deploy-key")
+   print("\thttps://docs.flsvc.net/docs/add-ssh-key")
    print("Once you have done this, come back to this terminal, and type y")
    print("##################################")
    print("###START FILE#####################")
@@ -146,12 +145,12 @@ def main():
    repo_dir = os.path.join(user_home, "workspace", "ee542")
    print(f"Using home directory: {user_home}")
    copy_bash_aliases(user_home)
-   # pub_key = configure_ssh(user_home)
-   # configure_deploy_key(pub_key)
-   # clone_repo(repo_url, repo_dir, "dev")
-   # setup_pipenv(repo_dir)
-   # create_env(repo_dir)
-   # configure_vscode(repo_dir)
+   pub_key = configure_ssh(user_home)
+   configure_ssh_key(pub_key)
+   clone_repo(repo_url, repo_dir, "dev")
+   setup_pipenv(repo_dir)
+   create_env(repo_dir)
+   configure_vscode(repo_dir)
 
 if __name__ == "__main__":
    main()
