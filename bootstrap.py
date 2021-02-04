@@ -141,7 +141,7 @@ def copy_bash_aliases(user_home):
 
 
 def main():
-   print("Starting user configuration script.")
+   print(f"running {os.path.basename(__file__)}")
    user_home = str(Path.home())
    repo_url = "git@github.com:dgaiero/ee542.git"
    repo_dir = os.path.join(user_home, "workspace", "ee542")
