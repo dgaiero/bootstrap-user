@@ -54,7 +54,7 @@ def write_ssh_file(ssh_path, filename, data):
       f = open(file_path, 'wb')
       f.write(data)
       f.close()
-      os.chmod(ssh_path, 400)
+      os.chmod(file_path,400)
    return file_exist
 
 
@@ -62,7 +62,6 @@ def write_ssh_file(ssh_path, filename, data):
 def configure_ssh(user_home):
    ssh_path = os.path.join(user_home, ".ssh")
    Path(ssh_path).mkdir(parents=True, exist_ok=True)
-   os.chmod(ssh_path,400)
    priv_key, pub_key = generate_keys()
    write_ssh_file(ssh_path, "id_rsa", priv_key)
    file_exist = write_ssh_file(ssh_path, "id_rsa.pub", pub_key)
@@ -147,13 +146,13 @@ def main():
    repo_url = "git@github.com:dgaiero/ee542.git"
    repo_dir = os.path.join(user_home, "workspace", "ee542")
    print(f"Using home directory: {user_home}")
-   copy_bash_aliases(user_home)
+   # copy_bash_aliases(user_home)
    pub_key = configure_ssh(user_home)
    configure_ssh_key(pub_key)
-   clone_repo(repo_url, repo_dir, "dev")
-   setup_pipenv(repo_dir)
-   create_env(repo_dir)
-   configure_vscode(repo_dir)
+   # clone_repo(repo_url, repo_dir, "dev")
+   # setup_pipenv(repo_dir)
+   # create_env(repo_dir)
+   # configure_vscode(repo_dir)
 
 if __name__ == "__main__":
    main()
