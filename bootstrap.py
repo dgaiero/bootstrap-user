@@ -68,6 +68,7 @@ def configure_ssh(user_home):
       fd = open(os.path.join(ssh_path, "id_rsa.pub"), "rb")
       pub_key = fd.read()
       fd.close()
+      os.chmod(ssh_path, 400)
    return pub_key
 
 @print_func
