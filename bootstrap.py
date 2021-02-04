@@ -131,18 +131,27 @@ def configure_vscode(repo_dir):
    with open(vscode_settings_location, 'w') as json_file:
       json.dump(vscode_settings_file, json_file)
 
+@print_func
+def copy_bash_aliases(user_home):
+   cwd = os.path.dirname(os.path.realpath(__file__))
+   src_file = os.path.join(cwd, "_config", "$user", ".bash_aliases")
+   dst_file = os.path.join(user_home, ".bash_aliases")
+   shutil.copy2(src_file, dst_file)
+
+
 def main():
    print("Starting user configuration script.")
    user_home = str(Path.home())
    repo_url = "git@github.com:dgaiero/ee542.git"
    repo_dir = os.path.join(user_home, "workspace", "ee542")
    print(f"Using home directory: {user_home}")
-   pub_key = configure_ssh(user_home)
-   configure_deploy_key(pub_key)
-   clone_repo(repo_url, repo_dir, "dev")
-   setup_pipenv(repo_dir)
-   create_env(repo_dir)
-   configure_vscode(repo_dir)
+   copy_bash_aliases(user_home)
+   # pub_key = configure_ssh(user_home)
+   # configure_deploy_key(pub_key)
+   # clone_repo(repo_url, repo_dir, "dev")
+   # setup_pipenv(repo_dir)
+   # create_env(repo_dir)
+   # configure_vscode(repo_dir)
 
 if __name__ == "__main__":
    main()
