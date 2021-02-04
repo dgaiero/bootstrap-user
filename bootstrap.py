@@ -54,7 +54,7 @@ def write_ssh_file(ssh_path, filename, data):
       f = open(file_path, 'wb')
       f.write(data)
       f.close()
-      os.chmod(file_path,400)
+      os.chmod(file_path,0o400)
    return file_exist
 
 
