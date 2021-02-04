@@ -12,8 +12,6 @@ if [  ! -f $HOME/.profile_config ]; then
       printf "The pipenv environment failed to setup.\n"
       printf "You will need to setup your account manually.\n\n"
    fi
-   printf "Cleaning up\n"
-   pipenv --rm &> /dev/null
    if [ $? -eq 0 ]; then
       printf -- "----------------------------------------------------------------\n"
       printf "Your account is setup correctly.\nPlease logout to finish setup.\n"
@@ -26,4 +24,6 @@ if [  ! -f $HOME/.profile_config ]; then
       printf "I'll try again next time you login.\n"
       printf -- "--------------------------------------\n"
    fi
+   printf "Cleaning up\n"
+   pipenv --rm &> /dev/null
 fi
