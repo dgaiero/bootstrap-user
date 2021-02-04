@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd /var/userbootstrap
-pipenv install
+pipenv install --ignore-pipfile
 if [ $? -eq 0 ]; then
    pipenv run python bootstrap.py
 else
