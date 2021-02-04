@@ -1,13 +1,16 @@
 import functools
 import os
-from pathlib import Path
 import subprocess
+from pathlib import Path
+
+import json
+import git
+import shutil
 from cryptography.hazmat.backends import \
     default_backend as crypto_default_backend
 from cryptography.hazmat.primitives import \
     serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-import git
 from prompt_toolkit import prompt
 from prompt_toolkit.shortcuts import confirm
 
@@ -76,7 +79,7 @@ def configure_deploy_key(pub_key):
    print("Once you have done this, come back to this terminal, and type y")
    print("##################################")
    print("###START FILE#####################")
-   print(pub_key.decode("utf-8"))
+   print(pub_key.decode("utf-8")).strip('\n')
    print("###END FILE#######################")
    print("##################################")
    copy = False
@@ -90,25 +93,56 @@ def clone_repo(repo_url, repo_dir, branch):
    print(f"checking out {branch} branch")
    repo.git.checkout(branch)
 
-@print_fund
+@print_func
 def setup_pipenv(repo_dir):
-   status = subprocess.call(['pipenv', 'install', '--dev'],
+   status = subprocess.run(['pipenv', 'install', '--dev'], \
                             cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-   if return_code != 0:
+   if status.returncode != 0:
       print("pipenv install failed:")
       for line in status.stdout.readlines():
          print(line.strip())
 
+@print_func
+def create_env(repo_dir):
+   file_path = os.path.join(repo_dir, ".env")
+   f = open(file_path, 'w')
+   f.write("PYTHONPATH=${PYTHONPATH}:${PWD}\n")
+   f.close()
+
+@print_func
+def get_venv_location(repo_dir):
+   venv_python = subprocess.run(['pipenv', '--venv'],
+                                cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+   venv_location = venv_python.stdout.decode("utf-8").strip('\n')
+   venv_location = os.path.join(venv_location, "bin", "python")
+   return venv_location
+
+@print_func
+def configure_vscode(repo_dir):
+   cwd = os.path.dirname(os.path.realpath(__file__))
+   shutil.copytree(os.path.join(cwd, "_config/.vscode"),
+      os.path.join(repo_dir, ".vscode"))
+
+   venv_location = get_venv_location(repo_dir)
+   vscode_settings_location = os.path.join(repo_dir, ".vscode", "settings.json")
+   with open(vscode_settings_location) as f:
+      vscode_settings_file = json.load(f)
+   vscode_settings_file['python.pythonPath'] = venv_location
+   with open(vscode_settings_location, 'w') as json_file:
+      json.dump(vscode_settings_file, json_file)
+
 def main():
    print("Starting user configuration script.")
    user_home = str(Path.home())
+   repo_url = "git@github.com:dgaiero/ee542.git"
+   repo_dir = os.path.join(user_home, "workspace", "ee542")
    print(f"Using home directory: {user_home}")
    pub_key = configure_ssh(user_home)
    configure_deploy_key(pub_key)
-   repo_url = "git@github.com:dgaiero/ee542.git"
-   repo_dir = os.path.join(user_home, "workspace", "ee542")
    clone_repo(repo_url, repo_dir, "dev")
    setup_pipenv(repo_dir)
+   create_env(repo_dir)
+   configure_vscode(repo_dir)
 
 if __name__ == "__main__":
    main()

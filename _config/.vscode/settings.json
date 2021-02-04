@@ -1,0 +1,7 @@
+{
+   "python.pythonPath": "",
+    "files.autoSave": "afterDelay",
+    "editor.rulers": [
+        80
+    ]
+}
