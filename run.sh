@@ -9,7 +9,7 @@ else
    printf "The pipenv environment failed to setup.\n"
    printf "You will need to setup your account manually.\n\n"
 fi
-printf "Cleaning up"
+printf "Cleaning up\n"
 pipenv --rm &> /dev/null
 
 printf "Your account is setup correctly.\nPlease logout to finish setup.\n"
