@@ -62,6 +62,7 @@ def write_ssh_file(ssh_path, filename, data):
 def configure_ssh(user_home):
    ssh_path = os.path.join(user_home, ".ssh")
    Path(ssh_path).mkdir(parents=True, exist_ok=True)
+   os.chmod(ssh_path,400)
    priv_key, pub_key = generate_keys()
    write_ssh_file(ssh_path, "id_rsa", priv_key)
    file_exist = write_ssh_file(ssh_path, "id_rsa.pub", pub_key)
