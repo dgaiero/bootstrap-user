@@ -15,7 +15,7 @@ if [  ! -f $HOME/.profile_config ]; then
    if [ $? -eq 0 ]; then
       printf -- "----------------------------------------------------------------\n"
       printf "Your account is setup correctly.\nPlease logout to finish setup.\n"
-      printf "(You can use the logout command)\n\n"
+      printf "(You can use the logout command)\n"
       printf -- "----------------------------------------------------------------\n"
       touch $HOME/.profile_config
    else
