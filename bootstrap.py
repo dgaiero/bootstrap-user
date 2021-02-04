@@ -91,6 +91,8 @@ def clone_repo(repo_url, repo_dir, branch):
    repo = git.Repo.clone_from(repo_url, repo_dir)
    print(f"checking out {branch} branch")
    repo.git.checkout(branch)
+   log_dir = os.path.join(repo_dir, "logs")
+   Path(log_dir).mkdir(parents=True, exist_ok=True)
 
 @print_func
 def setup_pipenv(repo_dir):
