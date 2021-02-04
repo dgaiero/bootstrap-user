@@ -97,11 +97,10 @@ def clone_repo(repo_url, repo_dir, branch):
 @print_func
 def setup_pipenv(repo_dir):
    status = subprocess.run(['pipenv', 'install', '--dev'], \
-                            cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                            cwd=repo_dir, capture_output=True, text=True)
    if status.returncode != 0:
       print("pipenv install failed:")
-      for line in status.stdout.readlines():
-         print(line.strip())
+      print(status.stdout)
 
 @print_func
 def create_env(repo_dir):
