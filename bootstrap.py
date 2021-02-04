@@ -75,7 +75,7 @@ def configure_ssh(user_home):
 def configure_ssh_key(pub_key):
    print("You need to add the contents of your public key to GitHub.")
    print("For instructions on how to do this, please visit:")
-   print("\thttps://docs.flsvc.net/docs/add-ssh-key")
+   print("\thttps://bit.ly/gh-ssh")
    print("Once you have done this, come back to this terminal, and type y")
    print("##################################")
    print("###START FILE#####################")
