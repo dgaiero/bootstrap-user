@@ -78,7 +78,7 @@ def configure_ssh_key(pub_key):
    print("Once you have done this, come back to this terminal, and type y")
    print("##################################")
    print("###START FILE#####################")
-   print(pub_key.decode("utf-8")).strip('\n')
+   print(pub_key.decode("utf-8").strip('\n'))
    print("###END FILE#######################")
    print("##################################")
    copy = False
