@@ -1,9 +1,9 @@
 #!/bin/bash
 
 cd /var/userbootstrap
-pipenv shell
+pipenv install
 if [ $? -eq 0 ]; then
-   python bootstrap.py
+   pipenv run python bootstrap.py
 else
    printf "The pipenv environment failed to setup.\n"
    printf "You will need to setup your account manually.\n\n"
