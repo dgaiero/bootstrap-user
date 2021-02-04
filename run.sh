@@ -1,7 +1,8 @@
 #!/bin/bash
 
 if [ -e $HOME/.profile ]  
-then 
+then
+else
    cd /var/userbootstrap
    printf "Starting user configuration script. This could take some time.\n"
    pipenv install --ignore-pipfile &> /dev/null
@@ -16,6 +17,5 @@ then
 
    printf "Your account is setup correctly.\nPlease logout to finish setup.\n"
    printf "(You can use the logout command)\n\n"
-else  
     touch $HOME/.profile
 fi
