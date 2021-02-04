@@ -14,10 +14,16 @@ if [  ! -f $HOME/.profile_config ]; then
    fi
    printf "Cleaning up\n"
    pipenv --rm &> /dev/null
-
-   touch $HOME/.profile_config
-   printf "----------------------------------------------------------------\n"
-   printf "Your account is setup correctly.\nPlease logout to finish setup.\n"
-   printf "(You can use the logout command)\n\n"
-   printf "--------------------------------------------------------------\n"
+   if [ $? -eq 0 ]; then
+      printf "----------------------------------------------------------------\n"
+      printf "Your account is setup correctly.\nPlease logout to finish setup.\n"
+      printf "(You can use the logout command)\n\n"
+      printf "----------------------------------------------------------------\n"
+      touch $HOME/.profile_config
+   else
+      printf "--------------------------------------\n"
+      printf "The setup script encountered an error.\n"
+      printf "I'll try again next time you login.\n"
+      printf "--------------------------------------\n"
+   fi
 fi
