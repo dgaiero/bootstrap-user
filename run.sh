@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd /var/userbootstrap
-printf "Starting user configuration script. This could take some time.\m"
+printf "Starting user configuration script. This could take some time.\n"
 pipenv install --ignore-pipfile &> /dev/null
 if [ $? -eq 0 ]; then
    pipenv run python bootstrap.py
