@@ -1,8 +1,6 @@
 #!/bin/bash
 
-if [ -e $HOME/.profile ]  
-then
-else
+if [  ! -f $HOME/.profile ]; then
    cd /var/userbootstrap
    printf "Starting user configuration script. This could take some time.\n"
    pipenv install --ignore-pipfile &> /dev/null
